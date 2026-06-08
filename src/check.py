@@ -1,23 +1,8 @@
 def check_Restock(inv: list[int]) -> None:
-    n = len(inv)
-    i = 0
-    while i < n:
-        if inv[i] == 0:
-            # Shift elements from the end down by one, dropping the last element.
-            for j in range(n - 1, i + 1, -1):
-                inv[j] = inv[j - 1]
-            # Place the duplicate zero (only if there's a next slot).
-            if i + 1 < n:
-                inv[i + 1] = 0
-            i += 2  # Skip over both zeros
-        else:
-            i += 1
-
-
-def check_Restock_2(inv: list[int]) -> None:
+    # solution: O(n) time, O(1) space
     n = len(inv)
     zeros = 0
-    for i in range(n):
+    for i in range(n-1):
         if inv[i] == 0:
             if i + zeros + 1 < n:
                 zeros += 1
@@ -25,7 +10,8 @@ def check_Restock_2(inv: list[int]) -> None:
                 break
         if i + zeros + 1 == n:
             break
-
+    if zeros == 0:
+        return
     last = n - 1
     i = n - 1 - zeros
     while i >= 0:
@@ -41,6 +27,6 @@ def check_Restock_2(inv: list[int]) -> None:
         i -= 1
 
 if __name__ == "__main__":
-    inv = [0, 0, 1, 2]
-    check_Restock_2(inv)
+    inv = [1, 2, 3, 0]
+    check_Restock(inv)
     print(inv)
